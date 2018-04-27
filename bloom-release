@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]
+then
+  echo "$0 package-name ros-distro [bloom-release options (e.g. --edit)]"
+  exit 0
+fi
+
+docker run --rm -it -v "/home/${USER}/.config/:/root/.config/:ro" -v "/home/${USER}/.gitconfig:/root/.gitconfig:ro" -v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent ros-bloom bloom-release $1 --track $2 --ros-distro $2 ${@:3}
