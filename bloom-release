@@ -6,4 +6,9 @@ then
   exit 0
 fi
 
-docker run --rm -it -v "/home/${USER}/.config/:/root/.config/:ro" -v "/home/${USER}/.gitconfig:/root/.gitconfig:ro" -v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent ros-bloom bloom-release $1 --track $2 --ros-distro $2 ${@:3}
+if [ ! -f /home/${USER}/.config/bloom ]
+then
+  echo "{}" >> /home/${USER}/.config/bloom
+fi
+
+docker run --rm -it -v "/home/${USER}/.config/bloom:/root/.config/bloom:rw" -v "/home/${USER}/.gitconfig:/root/.gitconfig:ro" -v "/home/${USER}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" -v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent ros-bloom bloom-release $1 --track $2 --ros-distro $2 ${@:3}
