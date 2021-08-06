@@ -1,6 +1,6 @@
-FROM ros:kinetic
+FROM ros:noetic
 
 RUN apt-get update -qq \
-  && apt-get install -y python-pip ssh \
-  && pip install bloom \
+  && apt-get install -y python3-pip ssh \
+  && python3 -m pip install bloom \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
